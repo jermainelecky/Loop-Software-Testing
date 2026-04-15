@@ -31,7 +31,7 @@ This document breaks the technical evaluation into **small, sequential steps**. 
 
 6. **Installed `@playwright/test`** as a dev dependency. TypeScript was already set up (`typescript`, `@types/node`), and **`@playwright/test`** supplies the test runner and TypeScript support for specs—no separate runner package.
 
-7. **Ran `npx playwright install`** so Playwright downloaded its browser binaries (Chromium, Firefox, WebKit, ffmpeg, etc.) into the local Playwright cache. *Note: `playwright.config.ts` is set to run tests on **Chromium** only; the other browsers are available if we add projects later.*
+7. **Ran `npx playwright install`** so Playwright downloaded its browser binaries (Chromium, Firefox, WebKit, ffmpeg, etc.) into the local Playwright cache. *Note: `playwright.config.ts` is set to run tests on **Chromium** only; but the other browsers are available.*
 
 8. **Added `playwright.config.ts`** at the repo root with:
    - **`testDir`:** `./tests`
@@ -43,71 +43,69 @@ This document breaks the technical evaluation into **small, sequential steps**. 
 
 10. **Updated `tsconfig.json`** so `"types"` includes `"@playwright/test"` for type-checking specs.
 
-11. **Added `tests/sanity.spec.ts`** as a smoke test (HTTP 200 on `/`) and removed the temporary `placeholder.ts` file.
-
 ---
 
 ## Phase 3 — Data model (JSON-driven design)
 
-12. **Define a single JSON structure** that can express every scenario without repeating logic. For each case, include at least:
+11. **Define a single JSON structure** that can express every scenario without repeating logic. For each case, include at least:
     - **application** (e.g. `"Web Application"` | `"Mobile Application"`).
     - **taskTitle** (exact string to find on the board).
     - **column** (e.g. `"To Do"` | `"In Progress"` | `"Done"`).
     - **tags** (array of expected tag strings, in the order or set you will assert).
 
-13. **Create a data file** (e.g. `tests/data/scenarios.json` or `tests/fixtures/scenarios.json`) containing **six objects** matching the six test cases from the evaluation (titles, columns, and tags exactly as specified).
+12. **Create a data file** (e.g. `tests/data/scenarios.json` or `tests/fixtures/scenarios.json`) containing **six objects** matching the six test cases from the evaluation (titles, columns, and tags exactly as specified).
 
-14. **Optional but useful:** Add a **TypeScript interface** or JSDoc typedef for a scenario so the JSON shape stays documented and type-safe.
+13. **Optional but useful:** Add a **TypeScript interface** or JSDoc typedef for a scenario so the JSON shape stays documented and type-safe.
 
 ---
 
 ## Phase 4 — Login automation (reusable)
 
-15. **Implement a login helper** used by all tests:
+14. **Implement a login helper** used by all tests:
     - Navigate to the demo app URL.
     - Fill **email** with `admin` and **password** with `password123`.
     - Submit the form and **wait until the post-login UI is ready** (URL change, dashboard element, or network idle—whatever is stable).
 
-16. **Extract login into one place**: a function in a `helpers/` or `fixtures/` file, or a **Playwright fixture** that performs login before each test that needs it. Avoid copying the same login steps into every test file.
+15. **Extract login into one place**: a function in a `helpers/` or `fixtures/` file, or a **Playwright fixture** that performs login before each test that needs it. Avoid copying the same login steps into every test file.
 
-17. **Run the helper in isolation** (temporary test or `test.only`) to confirm login succeeds every time.
+16. **Run the helper in isolation** (temporary test or `test.only`) to confirm login succeeds every time.
 
 ---
 
 ## Phase 5 — Navigation and assertions (page knowledge)
 
-18. **Implement navigation to an application tab**: after login, click **Web Application** or **Mobile Application** based on scenario data. Use **role**, **text**, or **data-testid** selectors—prefer the most stable option the app exposes.
+17. **Implement navigation to an application tab**: after login, click **Web Application** or **Mobile Application** based on scenario data. Use **role**, **text**, or **data-testid** selectors—prefer the most stable option the app exposes.
 
-19. **Implement “task in column” verification**:
+18. **Implement “task in column” verification**:
     - Locate the column by name (e.g. **To Do**, **In Progress**, **Done**).
     - Within that column, assert the **task title** is visible.
 
-20. **Implement tag verification**:
+19. **Implement tag verification**:
     - For each expected tag in the scenario JSON, assert it appears **on or near** the correct task (same card/row as the title). Adjust if the UI groups tags differently.
 
-21. **Refactor duplicated UI steps** into shared functions (e.g. `openApplication(name)`, `expectTaskInColumn(task, column)`, `expectTagsForTask(task, tags)`) so the **test file only loops data + calls helpers**.
+20. **Refactor duplicated UI steps** into shared functions (e.g. `openApplication(name)`, `expectTaskInColumn(task, column)`, `expectTagsForTask(task, tags)`) so the **test file only loops data + calls helpers**.
 
 ---
 
 ## Phase 6 — Data-driven tests (single loop, minimal duplication)
 
-22. **Write one parameterized test** (or one `test.describe` with `for`/`test` over the JSON array) that:
+21. **Write one parameterized test** (or one `test.describe` with `for`/`test` over the JSON array) that:
     - Loads the scenarios from JSON.
     - For each scenario: logs in (or uses authenticated fixture), navigates, asserts column + tags.
 
-23. **Ensure adding test case 7** later is only **adding one JSON object**, not a new copy-pasted test block.
+22. **Ensure adding test case 7** later is only **adding one JSON object**, not a new copy-pasted test block.
 
-24. **Run the full suite** headless and headed; fix flakiness (waits, `expect` retries, locator strictness).
+23. **Run the full suite** headless and headed; fix flakiness (waits, `expect` retries, locator strictness).
 
 ---
 
 ## Phase 7 — Quality and handoff
 
-25. **Document in README** (only if appropriate for your submission): how to install, run tests, and where scenario data lives.
+24. **Document in README** (only if appropriate for your submission): how to install, run tests, and where scenario data lives.
 
-26. **Optional:** Add **lint/format** (ESLint, Prettier) and a **CI** workflow that runs `npx playwright test`—only if the evaluation expects it or you want a stronger impression.
+25. **Optional:** Add **lint/format** (ESLint, Prettier) and a **CI** workflow that runs `npx playwright test`—only if the evaluation expects it or you want a stronger impression.
 
-27. **Final pass:** Confirm all six acceptance scenarios pass, credentials are not hardcoded in multiple files (use constants or env), and the JSON is the single source of truth for case variations.
+26. **Final pass:** Confirm all six acceptance scenarios pass, credentials are not hardcoded in multiple files (use constants or env), and the JSON is the single source of truth for case variations.
 
 ---
 
