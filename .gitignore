@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Project documentation (local implementation plan)
+implementation-method.md

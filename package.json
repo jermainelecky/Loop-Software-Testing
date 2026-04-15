@@ -1,0 +1,30 @@
+{
+  "name": "loop-software-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jermainelecky/Loop-Software-Testing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jermainelecky/Loop-Software-Testing/issues"
+  },
+  "homepage": "https://github.com/jermainelecky/Loop-Software-Testing#readme",
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.2"
+  }
+}
