@@ -7,7 +7,9 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
     "typecheck": "tsc --noEmit"
   },
   "repository": {
@@ -24,6 +26,7 @@
   },
   "homepage": "https://github.com/jermainelecky/Loop-Software-Testing#readme",
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "@types/node": "^25.6.0",
     "typescript": "^6.0.2"
   }
