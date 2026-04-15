@@ -11,6 +11,3 @@ node_modules/
 .env
 .env.*
 !.env.example
-
-# Project documentation (local implementation plan)
-implementation-method.md
