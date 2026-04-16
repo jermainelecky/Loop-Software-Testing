@@ -74,38 +74,37 @@ This document breaks the technical evaluation into **small, sequential steps**. 
 
 ## Phase 5 — Navigation and assertions (page knowledge)
 
-18. **Implement navigation to an application tab**: after login, click **Web Application** or **Mobile Application** based on scenario data. Use **role**, **text**, or **data-testid** selectors—prefer the most stable option the app exposes.
+18. **Implemented reusable application-tab navigation** in `tests/helpers/navigation.ts` via `openApplication(page, application)`, using role-based lookup in `<nav>` and selecting the button that matches the scenario's application name.
 
-19. **Implement “task in column” verification**:
-    - Locate the column by name (e.g. **To Do**, **In Progress**, **Done**).
-    - Within that column, assert the **task title** is visible.
+19. **Added post-navigation validation** by asserting the page `<h1>` matches the selected application, confirming the tab switch actually succeeded.
 
-20. **Implement tag verification**:
-    - For each expected tag in the scenario JSON, assert it appears **on or near** the correct task (same card/row as the title). Adjust if the UI groups tags differently.
+20. **Implemented task-to-column verification** in `tests/helpers/board.ts` via `expectTaskInColumn(page, taskTitle, column)`, locating the task `<h3>`, walking to its column container, and asserting the column `<h2>` text matches the expected scenario column.
 
-21. **Refactor duplicated UI steps** into shared functions (e.g. `openApplication(name)`, `expectTaskInColumn(task, column)`, `expectTagsForTask(task, tags)`) so the **test file only loops data + calls helpers**.
+21. **Implemented strict tag verification** in `tests/helpers/board.ts` via `expectTagsForTask(page, taskTitle, tags)`, collecting tag text from the task's dedicated tag container `<span>` elements and asserting all expected tags are present.
+
+22. **Refactored shared UI checks into helpers** (`openApplication`, `expectTaskInColumn`, `expectTagsForTask`) and wired them into the current test flow so test bodies remain concise and scenario-driven.
 
 ---
 
 ## Phase 6 — Data-driven tests (single loop, minimal duplication)
 
-22. **Write one parameterized test** (or one `test.describe` with `for`/`test` over the JSON array) that:
+23. **Write one parameterized test** (or one `test.describe` with `for`/`test` over the JSON array) that:
     - Loads the scenarios from JSON.
     - For each scenario: logs in (or uses authenticated fixture), navigates, asserts column + tags.
 
-23. **Ensure adding test case 7** later is only **adding one JSON object**, not a new copy-pasted test block.
+24. **Ensure adding test case 7** later is only **adding one JSON object**, not a new copy-pasted test block.
 
-24. **Run the full suite** headless and headed; fix flakiness (waits, `expect` retries, locator strictness).
+25. **Run the full suite** headless and headed; fix flakiness (waits, `expect` retries, locator strictness).
 
 ---
 
 ## Phase 7 — Quality and handoff
 
-25. **Document in README** (only if appropriate for your submission): how to install, run tests, and where scenario data lives.
+26. **Document in README** (only if appropriate for your submission): how to install, run tests, and where scenario data lives.
 
-26. **Optional:** Add **lint/format** (ESLint, Prettier) and a **CI** workflow that runs `npx playwright test`—only if the evaluation expects it or you want a stronger impression.
+27. **Optional:** Add **lint/format** (ESLint, Prettier) and a **CI** workflow that runs `npx playwright test`—only if the evaluation expects it or you want a stronger impression.
 
-27. **Final pass:** Confirm all six acceptance scenarios pass, credentials are not hardcoded in multiple files (use constants or env), and the JSON is the single source of truth for case variations.
+28. **Final pass:** Confirm all six acceptance scenarios pass, credentials are not hardcoded in multiple files (use constants or env), and the JSON is the single source of truth for case variations.
 
 ---
 
