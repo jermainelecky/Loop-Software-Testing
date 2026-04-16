@@ -47,15 +47,13 @@ This document breaks the technical evaluation into **small, sequential steps**. 
 
 ## Phase 3 — Data model (JSON-driven design)
 
-11. **Define a single JSON structure** that can express every scenario without repeating logic. For each case, include at least:
-    - **application** (e.g. `"Web Application"` | `"Mobile Application"`).
-    - **taskTitle** (exact string to find on the board).
-    - **column** (e.g. `"To Do"` | `"In Progress"` | `"Done"`).
-    - **tags** (array of expected tag strings, in the order or set you will assert).
+11. **Defined a single JSON schema** for all six test cases so each scenario can be driven from data instead of hardcoded test logic.
+    - Included: **application**, **taskTitle**, **column**, and **tags**.
+    - Kept a stable **id** per scenario (`TC1`-`TC6`) to make each case easy to reference in test output.
 
-12. **Create a data file** (e.g. `tests/data/scenarios.json` or `tests/fixtures/scenarios.json`) containing **six objects** matching the six test cases from the evaluation (titles, columns, and tags exactly as specified).
+12. **Created `tests/data/scenarios.json`** as the source of truth for the six acceptance cases, with exact values for application area, task title, expected column, and expected tags.
 
-13. **Optional but useful:** Add a **TypeScript interface** or JSDoc typedef for a scenario so the JSON shape stays documented and type-safe.
+13. **Added `tests/data/scenario.types.ts`** with TypeScript types/interfaces (`TestScenario`, `ScenarioFile`, and related union types) so the JSON shape is documented and consumed in a type-safe way.
 
 ---
 

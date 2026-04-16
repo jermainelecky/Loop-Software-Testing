@@ -1,0 +1,46 @@
+{
+  "scenarios": [
+    {
+      "id": "TC1",
+      "application": "Web Application",
+      "taskTitle": "Implement user authentication",
+      "column": "To Do",
+      "tags": ["Feature", "High Priority"]
+    },
+    {
+      "id": "TC2",
+      "application": "Web Application",
+      "taskTitle": "Fix navigation bug",
+      "column": "To Do",
+      "tags": ["Bug"]
+    },
+    {
+      "id": "TC3",
+      "application": "Web Application",
+      "taskTitle": "Design system updates",
+      "column": "In Progress",
+      "tags": ["Design"]
+    },
+    {
+      "id": "TC4",
+      "application": "Mobile Application",
+      "taskTitle": "Push notification system",
+      "column": "To Do",
+      "tags": ["Feature"]
+    },
+    {
+      "id": "TC5",
+      "application": "Mobile Application",
+      "taskTitle": "Offline mode",
+      "column": "In Progress",
+      "tags": ["Feature", "High Priority"]
+    },
+    {
+      "id": "TC6",
+      "application": "Mobile Application",
+      "taskTitle": "App icon design",
+      "column": "Done",
+      "tags": ["Design"]
+    }
+  ]
+}
