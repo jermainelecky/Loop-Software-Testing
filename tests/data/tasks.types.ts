@@ -1,10 +1,10 @@
-import scenariosJson from './scenarios.json';
+import tasksJson from './tasks.json';
 
 export type ApplicationName = 'Web Application' | 'Mobile Application';
 export type ColumnName = 'To Do' | 'In Progress' | 'Done';
 export type TagName = 'Feature' | 'High Priority' | 'Bug' | 'Design';
 
-export interface TestScenario {
+export interface TestTask {
   id: string;
   application: ApplicationName;
   taskTitle: string;
@@ -12,10 +12,10 @@ export interface TestScenario {
   tags: TagName[];
 }
 
-export interface ScenarioFile {
-  scenarios: TestScenario[];
+export interface TaskFile {
+  tasks: TestTask[];
 }
 
-const typedScenariosFile = scenariosJson as ScenarioFile;
+const typedTasksFile = tasksJson as TaskFile;
 
-export const scenarios = typedScenariosFile.scenarios;
+export const tasks = typedTasksFile.tasks;

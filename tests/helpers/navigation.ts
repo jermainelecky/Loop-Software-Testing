@@ -1,5 +1,5 @@
 import { expect, Page } from '@playwright/test';
-import { ApplicationName } from '../data/scenario.types';
+import { ApplicationName } from '../data/tasks.types';
 
 export async function openApplication(page: Page, application: ApplicationName): Promise<void> {
   const nav = page.locator('nav');
@@ -9,3 +9,4 @@ export async function openApplication(page: Page, application: ApplicationName):
   await applicationButton.click();
   await expect(page.getByRole('heading', { level: 1, name: application, exact: true })).toBeVisible();
 }
+

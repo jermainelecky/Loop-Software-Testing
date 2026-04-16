@@ -1,5 +1,5 @@
 {
-  "scenarios": [
+  "tasks": [
     {
       "id": "TC1",
       "application": "Web Application",

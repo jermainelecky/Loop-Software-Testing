@@ -9,7 +9,7 @@ This document breaks the technical evaluation into **small, sequential steps**. 
 1. **Re-read the acceptance criteria** and confirm you will:
    - Use **JavaScript or TypeScript only** (no other languages for tests).
    - Build a **Playwright** test suite.
-   - Drive scenarios from a **JSON** structure so adding cases does not duplicate test code.
+   - Drive tasks from a **JSON** structure so adding cases does not duplicate test code.
    - Automate **login** to the demo app with the provided URL and credentials.
    - Cover **six test cases** (board navigation, column placement, and tag assertions).
 
@@ -51,9 +51,9 @@ This document breaks the technical evaluation into **small, sequential steps**. 
     - Included: **application**, **taskTitle**, **column**, and **tags**.
     - Kept a stable **id** per scenario (`TC1`-`TC6`) to make each case easy to reference in test output.
 
-12. **Created `tests/data/scenarios.json`** as the source of truth for the six acceptance cases, with exact values for application area, task title, expected column, and expected tags.
+12. **Created `tests/data/tasks.json`** as the source of truth for the six acceptance cases, with exact values for application area, task title, expected column, and expected tags.
 
-13. **Added `tests/data/scenario.types.ts`** with TypeScript types/interfaces (`TestScenario`, `ScenarioFile`, and related union types) so the JSON shape is documented and consumed in a type-safe way.
+13. **Added `tests/data/tasks.types.ts`** with TypeScript types/interfaces (`TestTask`, `TaskFile`, and related union types) so the JSON shape is documented and consumed in a type-safe way.
 
 ---
 
@@ -89,7 +89,7 @@ This document breaks the technical evaluation into **small, sequential steps**. 
 ## Phase 6 — Data-driven tests (single loop, minimal duplication)
 
 23. **Write one parameterized test** (or one `test.describe` with `for`/`test` over the JSON array) that:
-    - Loads the scenarios from JSON.
+    - Loads the tasks from JSON.
     - For each scenario: logs in (or uses authenticated fixture), navigates, asserts column + tags.
 
 24. **Ensure adding test case 7** later is only **adding one JSON object**, not a new copy-pasted test block.
@@ -104,7 +104,7 @@ This document breaks the technical evaluation into **small, sequential steps**. 
 
 27. **Optional:** Add **lint/format** (ESLint, Prettier) and a **CI** workflow that runs `npx playwright test`—only if the evaluation expects it or you want a stronger impression.
 
-28. **Final pass:** Confirm all six acceptance scenarios pass, credentials are not hardcoded in multiple files (use constants or env), and the JSON is the single source of truth for case variations.
+28. **Final pass:** Confirm all six acceptance tasks pass, credentials are not hardcoded in multiple files (use constants or env), and the JSON is the single source of truth for case variations.
 
 ---
 
@@ -113,7 +113,7 @@ This document breaks the technical evaluation into **small, sequential steps**. 
 | Step | Focus |
 |------|--------|
 | 0–2 | Setup, Playwright install, config |
-| 3 | JSON scenarios + shape |
+| 3 | JSON tasks + shape |
 | 4 | Login once, reuse everywhere |
 | 5 | Nav + column + tag helpers |
 | 6 | One data-driven test loop |
@@ -130,4 +130,5 @@ This document breaks the technical evaluation into **small, sequential steps**. 
 | Password | `password123` |
 
 Use this file as a checklist: finish **Phase 0**, then **Phase 1**, and proceed in order unless a later phase blocks you (e.g. you may stub JSON in Phase 3 before Phase 4 if you prefer).
+
 

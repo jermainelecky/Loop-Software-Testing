@@ -1,5 +1,5 @@
 import { expect, Page } from '@playwright/test';
-import { ColumnName, TagName } from '../data/scenario.types';
+import { ColumnName, TagName } from '../data/tasks.types';
 
 export async function expectTaskInColumn(
   page: Page,
@@ -31,3 +31,4 @@ export async function expectTagsForTask(
     expect(actualTags).toContain(expectedTag);
   });
 }
+
