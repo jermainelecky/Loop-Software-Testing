@@ -66,3 +66,7 @@ Each test case is represented as a JSON object in `tasks.json` and includes:
 - `taskTitle`
 - `column`
 - `tags`
+
+## Implementation Notes
+
+If you want to see how the test suite was built step-by-step, refer to [implementation-method.md`](/implementation-method.md).
