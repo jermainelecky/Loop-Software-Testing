@@ -99,15 +99,21 @@ This document breaks the technical evaluation into **small, sequential steps**. 
 
 ## Phase 7 — Quality and handoff
 
-26. **Document in README** (only if appropriate for your submission): how to install, run tests, and where scenario data lives.
+26. **Documented the project in `README.md`** with clear setup and execution guidance:
+    - How to install dependencies and Playwright browsers.
+    - How to configure `.env` credentials.
+    - How to run tests (`npm test`, headed mode, and UI mode).
+    - Where task data and task types live (`tests/data/tasks.json`, `tests/data/tasks.types.ts`).
 
-27. **Optional:** Add **lint/format** (ESLint, Prettier) and a **CI** workflow that runs `npx playwright test`—only if the evaluation expects it or you want a stronger impression.
+27. **Completed a final validation pass** by running `npm run typecheck` and `npm test`, confirming all six acceptance tasks passed.
 
-28. **Final pass:** Confirm all six acceptance tasks pass, credentials are not hardcoded in multiple files (use constants or env), and the JSON is the single source of truth for case variations.
+28. **Confirmed configuration quality at handoff**:
+    - Credentials are consumed from env variables in the login helper (not hardcoded across tests).
+    - JSON task data remains the single source of truth for test-case variations.
 
 ---
 
-## Suggested order of work (summary)
+## Order of work (summary)
 
 | Step | Focus |
 |------|--------|
@@ -116,7 +122,7 @@ This document breaks the technical evaluation into **small, sequential steps**. 
 | 4 | Login once, reuse everywhere |
 | 5 | Nav + column + tag helpers |
 | 6 | One data-driven test loop |
-| 7 | Docs, polish, CI optional |
+| 7 | Polish and document |
 
 ---
 
@@ -127,7 +133,3 @@ This document breaks the technical evaluation into **small, sequential steps**. 
 | Demo URL | `https://animated-gingersnap-8cf7f2.netlify.app/` |
 | Email | `admin` |
 | Password | `password123` |
-
-Use this file as a checklist: finish **Phase 0**, then **Phase 1**, and proceed in order unless a later phase blocks you (e.g. you may stub JSON in Phase 3 before Phase 4 if you prefer).
-
-
