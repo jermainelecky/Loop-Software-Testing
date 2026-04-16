@@ -88,13 +88,12 @@ This document breaks the technical evaluation into **small, sequential steps**. 
 
 ## Phase 6 — Data-driven tests (single loop, minimal duplication)
 
-23. **Write one parameterized test** (or one `test.describe` with `for`/`test` over the JSON array) that:
-    - Loads the tasks from JSON.
-    - For each scenario: logs in (or uses authenticated fixture), navigates, asserts column + tags.
+23. **Implemented a parameterized test suite** in `tests/sanity.spec.ts` using `test.describe` + a `for` loop over the `tasks` array from JSON.
+    - Each generated test case runs the same shared flow: login, application navigation, task-in-column assertion, and tag assertion.
 
-24. **Ensure adding test case 7** later is only **adding one JSON object**, not a new copy-pasted test block.
+24. **Confirmed extensibility** by keeping all case-specific inputs in `tests/data/tasks.json`; adding a new case requires adding one new JSON object only (no duplicated test logic).
 
-25. **Run the full suite** headless and headed; fix flakiness (waits, `expect` retries, locator strictness).
+25. **Validated the full suite** with `npm run typecheck` and `npm test`; all six data-driven cases passed in Chromium.
 
 ---
 
